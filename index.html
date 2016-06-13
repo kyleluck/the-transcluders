@@ -5,19 +5,20 @@
     <title></title>
     <link href="bootstrap.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5R-SL0sa3h31vPenaEd1meNL4u0gq67s&libraries=places"></script>
   </head>
   <body>
 
     <div class="container">
       <div class="row">
         <div class="col col-xs-12">
-
           <search-form></search-form>
           <results></results>
-
         </div>
       </div>
     </div>
+
+    <div id="map" class="map"></div>
 
     <script src="angular.js"></script>
     <script src="angular-route.js"></script>

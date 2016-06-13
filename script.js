@@ -13,13 +13,16 @@ var cities = [
 
 var app = angular.module('app', []);
 
-app.controller('MainController', function($scope, Alchemy) {
+app.controller('MainController', function($scope, Alchemy, GoogleMapsService) {
+
+  var map = GoogleMapsService.createMap();
+
   $scope.search = function(searchQuery) {
     cities.forEach(function(city) {
       Alchemy.getData(city.name, searchQuery, function(response) {
         if (response.data.status === "ERROR") {
           console.log('ERROR in API', response.data.statusInfo);
-          return;  
+          return;
         }
         $scope.resultSet = response.data.result.docs;
         console.log(response);
@@ -50,6 +53,19 @@ app.factory('Alchemy', function($http) {
         }
       }).then(callback, errorCallback);
     }
+  };
+});
+
+app.factory('GoogleMapsService', function() {
+  var mapElement = document.getElementById('map');
+
+  return {
+    createMap: function() {
+      return new google.maps.Map(mapElement, {
+        center: {lat: 39.099727, lng: -94.578567},
+        zoom: 4
+      });
+    },
   };
 });
 

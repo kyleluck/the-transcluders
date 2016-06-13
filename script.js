@@ -16,7 +16,11 @@ var app = angular.module('app', []);
 app.controller('MainController', function($scope, Alchemy) {
   $scope.search = function(searchQuery) {
     cities.forEach(function(city) {
-      Alchemy.getData(city, searchQuery, function(response) {
+      Alchemy.getData(city.name, searchQuery, function(response) {
+        if (response.data.status === "ERROR") {
+          console.log('ERROR in API', response.data.statusInfo);
+          return;  
+        }
         $scope.resultSet = response.data.result.docs;
         console.log(response);
       }, function(response) {
@@ -39,7 +43,9 @@ app.factory('Alchemy', function($http) {
           end: "now",
           count: 5,
           return: "enriched",
-          'q.enriched.url.text': "A[" + city + "^" + searchQuery+ "]"
+          // 'q.enriched.url.text': "A[" + city + "^" + searchQuery+ "]"
+          'q.enriched.url.title': city,
+          'q.enriched.url.text': searchQuery
 
         }
       }).then(callback, errorCallback);

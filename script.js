@@ -4,11 +4,11 @@
 // var APIKEY = "88d4c0a96e942887a933223c884fb6281dcebafc"; //anthony
 
 var cities = [
-  {name: "New York"},
-  {name: "San Francisco"},
-  {name: "Chicago"},
-  {name: "Houston"},
-  {name: "Atlanta"}
+  {name: "New York", center: {lat: 40.714, lng: -74.005}},
+  {name: "San Francisco", center: {lat: 37.775, lng: -122.419}},
+  {name: "Chicago", center: {lat: 41.878, lng: -87.629}},
+  {name: "Houston", center: {lat: 29.760, lng: -95.370}},
+  {name: "Atlanta", center: {lat: 33.749, lng: -84.388}}
 ];
 
 var app = angular.module('app', ['ngRoute']);
@@ -57,6 +57,9 @@ app.controller('MainController', function($scope, Alchemy) {
 
 app.controller('MapController', function(GoogleMapsService) {
   var map = GoogleMapsService.createMap();
+  cities.forEach(function(city) {
+    GoogleMapsService.createCircle("#ccc", "#ccc", city.center, map);
+  });
 });
 
 app.factory('Alchemy', function($http) {
@@ -91,6 +94,18 @@ app.factory('GoogleMapsService', function() {
         zoom: 4
       });
     },
+    createCircle: function(strokeColor, fillColor, center, map) {
+      return new google.maps.Circle({
+        strokeColor: strokeColor,
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: fillColor,
+        fillOpacity: 0.35,
+        map: map,
+        center: center,
+        radius: 80000
+      });
+    }
   };
 });
 

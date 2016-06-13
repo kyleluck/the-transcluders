@@ -11,12 +11,20 @@ var cities = [
   {name: "Atlanta"}
 ];
 
-var app = angular.module('app', []);
+var app = angular.module('app', ['ngRoute']);
 
-app.controller('MainController', function($scope, Alchemy, GoogleMapsService) {
+app.config(function($routeProvider) {
+  $routeProvider.when('/', {
+    templateUrl: 'main.html',
+    controller: 'MainController',
+  })
+  .when('/map', {
+    templateUrl: 'map.html',
+    controller: 'MapController'
+  });
+});
 
-  var map = GoogleMapsService.createMap();
-
+app.controller('MainController', function($scope, Alchemy) {
   $scope.search = function(searchQuery) {
     cities.forEach(function(city) {
       Alchemy.getData(city.name, searchQuery, function(response) {
@@ -32,6 +40,10 @@ app.controller('MainController', function($scope, Alchemy, GoogleMapsService) {
       });
     });
   };
+});
+
+app.controller('MapController', function(GoogleMapsService) {
+  var map = GoogleMapsService.createMap();
 });
 
 app.factory('Alchemy', function($http) {

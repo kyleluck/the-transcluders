@@ -10,13 +10,16 @@ app.controller('MainController', function($scope, Alchemy) {
     Alchemy.getData(searchQuery, function(response) {
       $scope.resultSet = response.data.result.docs;
       console.log(response);
+    }, function(response) {
+      alert('API Error. Check Console!');
+      console.log('API Error was: ', response);
     });
   };
 });
 
 app.factory('Alchemy', function($http) {
   return {
-    getData: function(searchQuery, callback) {
+    getData: function(searchQuery, callback, errorCallback) {
       $http({
         url: "https://gateway-a.watsonplatform.net/calls/data/GetNews",
         params: {
@@ -28,7 +31,7 @@ app.factory('Alchemy', function($http) {
           return: "enriched",
           'q.enriched.url.title': searchQuery
         }
-      }).then(callback);
+      }).then(callback, errorCallback);
     }
   };
 });

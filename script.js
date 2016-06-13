@@ -1,7 +1,7 @@
 // var APIKEY = "43bcbd9c821513cf95efd29956339792155c7ed3"; //regan
 // var APIKEY = "3ddc099bbb19af0cd00f41ee78920c7b2bb90f7d"; //kyle1
-// var APIKEY = "a2a76189999ce286d4a26875b8ec1d37eec6fc4e"; //kyle2
-var APIKEY = "88d4c0a96e942887a933223c884fb6281dcebafc"; //anthony
+ var APIKEY = "a2a76189999ce286d4a26875b8ec1d37eec6fc4e"; //kyle2
+//var APIKEY = "88d4c0a96e942887a933223c884fb6281dcebafc"; //anthony
 
 var cities = [
   {name: "New York"},
@@ -33,6 +33,18 @@ app.controller('MainController', function($scope, Alchemy) {
           return;
         }
         $scope.resultSet = response.data.result.docs;
+        //calculate average Sentiment score
+        var avgSentiment = 0;
+        var totalSentiment = 0;
+        var numberArticles = 0;
+        response.data.result.docs.forEach(function(article) {
+          var sentimentScore = article.source.enriched.url.docSentiment;
+          totalSentiment += parseFloat(sentimentScore);
+          numberArticles++;
+        });
+        console.log('number of articles: ', numberArticles);
+        avgSentiment = Number(totalSentiment / numberArticles);
+        console.log(avgSentiment);
         console.log(response);
       }, function(response) {
         alert('API Error. Check Console!');

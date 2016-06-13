@@ -7,10 +7,21 @@
     <link rel="stylesheet" href="style.css" media="screen" title="no title" charset="utf-8">
   </head>
   <body>
+
     <form ng-submit="search(searchQuery)">
       <input type="text" ng-model="searchQuery">
       <button type="submit">Search</button>
     </form>
+
+    <div class="results">
+      <p ng-repeat="result in resultSet">Title: {{ result.source.enriched.url.cleanedTitle }}
+      - Link <a href="{{ result.source.enriched.url.url }}">Link</a>
+      - Sentiment Score - {{ result.source.enriched.url.docSentiment.score }}
+      - Sentiment - {{ result.source.enriched.url.docSentiment.type }}
+      <img ng-src="{{ result.source.enriched.url.image }}">
+      </p>
+    </div>
+
     <script src="angular.js"></script>
     <script src="angular-route.js"></script>
     <script src="script.js"></script>

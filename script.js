@@ -6,16 +6,17 @@ var APIKEY = "43bcbd9c821513cf95efd29956339792155c7ed3"; //regan
 var app = angular.module('app', []);
 
 app.controller('MainController', function($scope, Alchemy) {
-  $scope.search = function() {
-    Alchemy.getData(function(response) {
+  $scope.search = function(searchQuery) {
+    Alchemy.getData(searchQuery, function(response) {
+      $scope.resultSet = response.data.result.docs;
       console.log(response);
     });
-  }; 
+  };
 });
 
 app.factory('Alchemy', function($http) {
   return {
-    getData: function(callback) {
+    getData: function(searchQuery, callback) {
       $http({
         url: "https://gateway-a.watsonplatform.net/calls/data/GetNews",
         params: {
@@ -24,7 +25,8 @@ app.factory('Alchemy', function($http) {
           start: "now-3h",
           end: "now",
           count: 5,
-          return: "enriched"
+          return: "enriched",
+          'q.enriched.url.title': searchQuery
         }
       }).then(callback);
     }

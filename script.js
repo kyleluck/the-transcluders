@@ -32,3 +32,17 @@ app.factory('Alchemy', function($http) {
     }
   };
 });
+
+app.directive('searchForm', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'search-form.html'
+  };
+});
+
+app.directive('results', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'results.html'
+  };
+});

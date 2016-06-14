@@ -29,7 +29,7 @@ app.config(function($routeProvider) {
   })
   .when('/analyzer', {
     templateUrl: 'analyzer.html',
-    controller: 'AnalyzerControler',
+    controller: 'AnalyzerController',
     activetab: 'analyzer'
   });
 });
@@ -48,7 +48,7 @@ app.controller('MainController', function($scope, Alchemy, $route) {
       Alchemy.getJsonFile(city.name, searchQuery, function(response) {
         // log error
         if (response.data.status === "ERROR") {
-          console.log('ERROR in API', response.data.statusInfo);
+          console.log('Response status was ERROR', response.data.statusInfo);
           return;
         }
         //push each city's result to resultSet array
@@ -57,11 +57,26 @@ app.controller('MainController', function($scope, Alchemy, $route) {
         var avgSentiment = 0;
         var totalSentiment = 0;
         var numberArticles = 0;
+        var numberPostive = 0;
+        var numberNegative = 0;
+        var numberNeutral = 0;
         response.data.result.docs.forEach(function(article) {
           var sentimentScore = article.source.enriched.url.docSentiment.score;
+          if (article.source.enriched.url.docSentiment.type === 'positive') {
+            numberPostive++;
+          } else if (article.source.enriched.url.docSentiment.type === 'negative') {
+            numberNegative++;
+          } else {
+            numberNeutral++;
+          }
           totalSentiment += sentimentScore;
           numberArticles++;
         });
+        city.numberArticles = numberArticles;
+        city.numberPostive = numberPostive;
+        city.numberNegative = numberNegative;
+        city.numberNeutral = numberNeutral;
+
         avgSentiment = Number(totalSentiment / numberArticles);
         //set avgSentiment per city
         city.avgSentiment = avgSentiment;
@@ -74,7 +89,7 @@ app.controller('MainController', function($scope, Alchemy, $route) {
   });
 // });
 
-app.controller('AnalyzerControler', function($scope, Alchemy) {
+app.controller('AnalyzerController', function($scope, Alchemy) {
   $scope.analyzeUrl = function(url) {
     Alchemy.urlData(url, function(response) {
       $scope.sentiment = response.data.docSentiment.type;
@@ -93,15 +108,15 @@ app.controller('MapController', function(GoogleMapsService) {
   cities.forEach(function(city) {
     if (city.avgSentiment >= 0.1) {
       fillColor = "#8FB996"; //green for positive sentiment
-      radiusSize = city.avgSentiment - 0.1;
-    } else if (city.avgSentiment <= -0.1) {
+      radiusSize = city.numberPostive / city.numberArticles * 100;
+    } else if (city.avgSentiment <= -0.01) {
       fillColor = "#A20900"; //red for negative sentiment
-      radiusSize = Math.abs(city.avgSentiment + 0.1);
+      radiusSize = city.numberNegative / city.numberArticles * 100;
     } else {
       fillColor = "#0353A4"; //blue for neutral
-      radiusSize = 0.75;
+      radiusSize = city.numberNeutral / city.numberArticles * 100;
     }
-    radiusSize *= 3000000;
+    radiusSize *= 400000;
     GoogleMapsService.createCircle("#ccc", fillColor, city.center, map, radiusSize); //parameters are strokeColor, fillColor, center, map
   });
 });

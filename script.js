@@ -25,6 +25,7 @@ app.config(function($routeProvider) {
 });
 
 app.controller('MainController', function($scope, Alchemy) {
+  $scope.resultSet = [];
   $scope.search = function(searchQuery) {
     cities.forEach(function(city) {
       //Alchemy.getData(city.name, searchQuery, function(response) {
@@ -33,7 +34,8 @@ app.controller('MainController', function($scope, Alchemy) {
           console.log('ERROR in API', response.data.statusInfo);
           return;
         }
-        $scope.resultSet = response.data.result.docs;
+        //$scope.resultSet = response.data.result.docs;
+        $scope.resultSet.push(response.data.result.docs);
         //calculate average Sentiment score
         var avgSentiment = 0;
         var totalSentiment = 0;
@@ -45,14 +47,12 @@ app.controller('MainController', function($scope, Alchemy) {
         });
         avgSentiment = Number(totalSentiment / numberArticles);
         city.avgSentiment = avgSentiment;
-        //console.log('avg sentiment:', avgSentiment);
         console.log(response);
       }, function(response) {
         alert('API Error. Check Console!');
         console.log('API Error was: ', response);
       });
     });
-    console.log(cities);
   };
 });
 

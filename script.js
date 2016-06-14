@@ -115,10 +115,10 @@ app.factory('Alchemy', function($http) {
 // createMap returns a new Google map
 // createCircle returns a new circle
 app.factory('GoogleMapsService', function() {
-  var mapElement = document.getElementById('map');
-
+  
   return {
     createMap: function() {
+      var mapElement = document.getElementById('map');
       return new google.maps.Map(mapElement, {
         center: {lat: 39.099727, lng: -94.578567},
         zoom: 4

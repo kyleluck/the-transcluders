@@ -30,7 +30,8 @@ app.config(function($routeProvider) {
 // MainController populates resultSet array with arrays of objects (articles)
 app.controller('MainController', function($scope, Alchemy) {
   $scope.resultSet = [];
-  $scope.search = function(searchQuery) {
+  var searchQuery = 2;
+  // $scope.search = function(searchQuery) {
     cities.forEach(function(city) {
       //Alchemy.getData(city.name, searchQuery, function(response) {
       Alchemy.getJsonFile(city.name, searchQuery, function(response) {
@@ -60,8 +61,8 @@ app.controller('MainController', function($scope, Alchemy) {
         console.log('API Error was: ', response);
       });
     });
-  };
-});
+  });
+// });
 
 // MapController creates a map and circles for each city
 app.controller('MapController', function(GoogleMapsService) {

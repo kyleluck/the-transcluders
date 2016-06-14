@@ -30,7 +30,7 @@ app.config(function($routeProvider) {
 // MainController populates resultSet array with arrays of objects (articles)
 app.controller('MainController', function($scope, Alchemy) {
   $scope.resultSet = [];
-  var searchQuery = 2;
+  var searchQuery = 2; // REMEMBER TO FIX THIS
   // $scope.search = function(searchQuery) {
     cities.forEach(function(city) {
       //Alchemy.getData(city.name, searchQuery, function(response) {
@@ -67,6 +67,8 @@ app.controller('MainController', function($scope, Alchemy) {
 // MapController creates a map and circles for each city
 app.controller('MapController', function(GoogleMapsService) {
   var map = GoogleMapsService.createMap();
+  GoogleMapsService.showLegend(map);
+
   var fillColor;
   cities.forEach(function(city) {
     console.log("inside map controler: " + city.name + " avgSentiment is " + city.avgSentiment);
@@ -115,7 +117,7 @@ app.factory('Alchemy', function($http) {
 // createMap returns a new Google map
 // createCircle returns a new circle
 app.factory('GoogleMapsService', function() {
-  
+
   return {
     createMap: function() {
       var mapElement = document.getElementById('map');
@@ -135,6 +137,11 @@ app.factory('GoogleMapsService', function() {
         center: center,
         radius: Math.sqrt(population) * 100
       });
+    },
+    showLegend: function(map) {
+      //show legend on map
+      var legend = document.getElementById('legend');
+      map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(legend);
     }
   };
 });

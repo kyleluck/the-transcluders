@@ -17,11 +17,7 @@ var app = angular.module('app', ['ngRoute']);
 
 // define routing
 app.config(function($routeProvider) {
-  $routeProvider.when('/', {
-    templateUrl: 'main.html',
-    controller: 'MainController',
-    activetab: 'search'
-  })
+  $routeProvider
   .when('/map', {
     templateUrl: 'map.html',
     controller: 'MapController',
@@ -31,7 +27,13 @@ app.config(function($routeProvider) {
     templateUrl: 'analyzer.html',
     controller: 'AnalyzerController',
     activetab: 'analyzer'
-  });
+  })
+  .when('/home', {
+    templateUrl: 'main.html',
+    controller: 'MainController',
+    activetab: 'search'
+  })
+  .otherwise({redirectTo: '/home'});
 });
 
 // MainController populates resultSet array with arrays of objects (articles)

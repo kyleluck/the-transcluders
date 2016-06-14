@@ -54,6 +54,7 @@ app.controller('MainController', function($scope, Alchemy) {
         //set avgSentiment per city
         city.avgSentiment = avgSentiment;
         console.log(response);
+        console.log(city.name + " avgSentiment is " + city.avgSentiment);
       }, function(response) {
         alert('API Error. Check Console!');
         console.log('API Error was: ', response);
@@ -65,8 +66,17 @@ app.controller('MainController', function($scope, Alchemy) {
 // MapController creates a map and circles for each city
 app.controller('MapController', function(GoogleMapsService) {
   var map = GoogleMapsService.createMap();
+  var fillColor;
   cities.forEach(function(city) {
-    GoogleMapsService.createCircle("#ccc", "#ccc", city.center, map);
+    console.log("inside map controler: " + city.name + " avgSentiment is " + city.avgSentiment);
+    if (city.avgSentiment >= 0.1) {
+      fillColor = "#8FB996"; //green for positive sentiment
+    } else if (city.avgSentiment <= -0.1) {
+      fillColor = "#A20900"; //red for negative sentiment
+    } else {
+      fillColor = "#0353A4"; //blue for neutral
+    }
+    GoogleMapsService.createCircle("#ccc", fillColor, city.center, map); //parameters are strokeColor, fillColor, center, map
   });
 });
 
@@ -119,7 +129,7 @@ app.factory('GoogleMapsService', function() {
         strokeOpacity: 0.8,
         strokeWeight: 2,
         fillColor: fillColor,
-        fillOpacity: 0.35,
+        fillOpacity: 0.65,
         map: map,
         center: center,
         radius: 80000

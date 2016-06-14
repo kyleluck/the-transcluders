@@ -67,8 +67,16 @@ app.controller('MainController', function($scope, Alchemy) {
     });
   });
 // });
+
 app.controller('AnalyzerControler', function($scope, Alchemy) {
-  
+  $scope.analyzeUrl = function(url) {
+    // console.log('it works ' + url);
+    Alchemy.urlData(url, function(response) {
+      console.log(response);
+      $scope.sentiment = response.data.docSentiment.type;
+      $scope.sentimentScore = response.data.docSentiment.score;
+    });
+  };
 });
 
 // MapController creates a map and circles for each city
@@ -108,7 +116,6 @@ app.factory('Alchemy', function($http) {
           // 'q.enriched.url.text': "A[" + city + "^" + searchQuery+ "]"
           'q.enriched.url.title': city,
           'q.enriched.url.text': searchQuery
-
         }
       }).then(callback, errorCallback);
     },
@@ -116,6 +123,16 @@ app.factory('Alchemy', function($http) {
       $http({
         url: "json/" + city + ".json"
       }).then(callback, errorCallback);
+    },
+    urlData: function(url, callback) {
+      $http({
+        url: "http://gateway-a.watsonplatform.net/calls/url/URLGetTextSentiment",
+        params: {
+          apikey: APIKEY,
+          url: url,
+          outputMode: 'json'
+        }
+      }).then(callback);
     }
   };
 });

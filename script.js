@@ -5,11 +5,11 @@
 
 // array of city objects
 var cities = [
-  {name: "New York", center: {lat: 40.714, lng: -74.005}},
-  {name: "San Francisco", center: {lat: 37.775, lng: -122.419}},
-  {name: "Chicago", center: {lat: 41.878, lng: -87.629}},
-  {name: "Houston", center: {lat: 29.760, lng: -95.370}},
-  {name: "Atlanta", center: {lat: 33.749, lng: -84.388}}
+  {name: "New York", center: {lat: 40.714, lng: -74.005}, population: 8491079},
+  {name: "San Francisco", center: {lat: 37.775, lng: -122.419}, population: 852469},
+  {name: "Chicago", center: {lat: 41.878, lng: -87.629}, population: 2722389},
+  {name: "Houston", center: {lat: 29.760, lng: -95.370}, population: 2239558},
+  {name: "Atlanta", center: {lat: 33.749, lng: -84.388}, population: 4500000}
 ];
 
 // define angular app
@@ -76,7 +76,7 @@ app.controller('MapController', function(GoogleMapsService) {
     } else {
       fillColor = "#0353A4"; //blue for neutral
     }
-    GoogleMapsService.createCircle("#ccc", fillColor, city.center, map); //parameters are strokeColor, fillColor, center, map
+    GoogleMapsService.createCircle("#ccc", fillColor, city.center, map, city.population); //parameters are strokeColor, fillColor, center, map
   });
 });
 
@@ -123,7 +123,7 @@ app.factory('GoogleMapsService', function() {
         zoom: 4
       });
     },
-    createCircle: function(strokeColor, fillColor, center, map) {
+    createCircle: function(strokeColor, fillColor, center, map, population) {
       return new google.maps.Circle({
         strokeColor: strokeColor,
         strokeOpacity: 0.8,
@@ -132,7 +132,7 @@ app.factory('GoogleMapsService', function() {
         fillOpacity: 0.65,
         map: map,
         center: center,
-        radius: 80000
+        radius: Math.sqrt(population) * 100
       });
     }
   };

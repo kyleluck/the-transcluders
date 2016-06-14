@@ -1,4 +1,7 @@
-<form ng-submit>
-  <input type="text">
-  <button>Search</button>
+<form ng-submit="analyzeUrl(url)">
+  <input type="text" ng-model="url">
+  <button type="submit">Analyze</button>
 </form>
+
+<div> {{sentiment}} </div>
+<div> {{sentimentScore}} </div>

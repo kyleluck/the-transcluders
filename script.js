@@ -82,6 +82,7 @@ app.controller('AnalyzerControler', function($scope, Alchemy) {
       console.log(response);
       $scope.sentiment = response.data.docSentiment.type;
       $scope.sentimentScore = response.data.docSentiment.score;
+      $scope.text = response.data.text;
     });
   };
 });
@@ -137,7 +138,8 @@ app.factory('Alchemy', function($http) {
         params: {
           apikey: APIKEY,
           url: url,
-          outputMode: 'json'
+          outputMode: 'json',
+          showSourceText: 1
         }
       }).then(callback);
     }

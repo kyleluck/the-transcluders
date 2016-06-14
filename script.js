@@ -20,20 +20,27 @@ app.config(function($routeProvider) {
   $routeProvider.when('/', {
     templateUrl: 'main.html',
     controller: 'MainController',
+    activetab: 'search'
   })
   .when('/map', {
     templateUrl: 'map.html',
-    controller: 'MapController'
+    controller: 'MapController',
+    activetab: 'map'
   })
   .when('/analyzer', {
     templateUrl: 'analyzer.html',
-    controller: 'AnalyzerControler'
+    controller: 'AnalyzerControler',
+    activetab: 'analyzer'
   });
 });
 
 // MainController populates resultSet array with arrays of objects (articles)
-app.controller('MainController', function($scope, Alchemy) {
+app.controller('MainController', function($scope, Alchemy, $route) {
   $scope.resultSet = [];
+  //change activetab when route changes
+  $scope.$on("$routeChangeSuccess", function(event, current, previous) {
+    $scope.activetab = current.$$route.activetab;
+  });
   var searchQuery = 2; // REMEMBER TO FIX THIS
   // $scope.search = function(searchQuery) {
     cities.forEach(function(city) {

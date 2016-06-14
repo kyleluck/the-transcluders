@@ -9,9 +9,9 @@
   </head>
   <body>
     <ul class="nav nav-pills">
-      <li class="active"><a href="#/">Search</a></li>
-      <li><a href="#/map">Map</a></li>
-      <li><a href="#/analyzer">Analyzer</a></li>
+      <li ng-class="{active: activetab == 'search'}"><a href="#/">Search</a></li>
+      <li ng-class="{active: activetab == 'map'}"><a href="#/map">Map</a></li>
+      <li ng-class="{active: activetab == 'analyzer'}"><a href="#/analyzer">Analyzer</a></li>
     </ul>
 
     <ng-view></ng-view>

@@ -66,7 +66,6 @@ app.controller('MainController', function($scope, Alchemy, $route) {
         //set avgSentiment per city
         city.avgSentiment = avgSentiment;
         console.log(response);
-        console.log(city.name + " avgSentiment is " + city.avgSentiment);
       }, function(response) {
         alert('API Error. Check Console!');
         console.log('API Error was: ', response);
@@ -77,9 +76,7 @@ app.controller('MainController', function($scope, Alchemy, $route) {
 
 app.controller('AnalyzerControler', function($scope, Alchemy) {
   $scope.analyzeUrl = function(url) {
-    // console.log('it works ' + url);
     Alchemy.urlData(url, function(response) {
-      console.log(response);
       $scope.sentiment = response.data.docSentiment.type;
       $scope.sentimentScore = response.data.docSentiment.score;
       $scope.text = response.data.text;
@@ -91,18 +88,21 @@ app.controller('AnalyzerControler', function($scope, Alchemy) {
 app.controller('MapController', function(GoogleMapsService) {
   var map = GoogleMapsService.createMap();
   GoogleMapsService.showLegend(map);
-
   var fillColor;
+  var radiusSize;
   cities.forEach(function(city) {
-    console.log("inside map controler: " + city.name + " avgSentiment is " + city.avgSentiment);
     if (city.avgSentiment >= 0.1) {
       fillColor = "#8FB996"; //green for positive sentiment
+      radiusSize = city.avgSentiment - 0.1;
     } else if (city.avgSentiment <= -0.1) {
       fillColor = "#A20900"; //red for negative sentiment
+      radiusSize = Math.abs(city.avgSentiment + 0.1);
     } else {
       fillColor = "#0353A4"; //blue for neutral
+      radiusSize = 0.75;
     }
-    GoogleMapsService.createCircle("#ccc", fillColor, city.center, map, city.population); //parameters are strokeColor, fillColor, center, map
+    radiusSize *= 3000000;
+    GoogleMapsService.createCircle("#ccc", fillColor, city.center, map, radiusSize); //parameters are strokeColor, fillColor, center, map
   });
 });
 

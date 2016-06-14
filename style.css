@@ -7,7 +7,6 @@ html, body {
 .map {
   height: 600px;
   width: 100%;
-  margin: 20px;
 }
 .legend {
   border: 1px solid white;
@@ -23,8 +22,21 @@ html, body {
   background: #8FB996;
 }
 .neutral {
-  background: #A20900;
+  background: #0353A4;
 }
 .negative {
-  background: #0353A4;
+  background: #A20900;
+}
+
+.nav.nav-pills {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.form-tabs {
+  margin-bottom: 20px;
+}
+
+.analyzer-results div {
+  margin-bottom: 10px;
 }

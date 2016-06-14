@@ -1,7 +1,11 @@
-<form ng-submit="analyzeUrl(url)">
+<h4>Enter a URL to a news article to analyze sentiment.</h4>
+
+<form ng-submit="analyzeUrl(url)" class="form-tabs">
   <input type="text" ng-model="url">
   <button type="submit">Analyze</button>
 </form>
-
-<div> {{sentiment}} </div>
-<div> {{sentimentScore}} </div>
+<div ng-show="text" class="analyzer-results">
+  <div ng-class="sentimentScore > 0 ? 'positive' : (sentimentScore < 0 ? 'negative' : 'neutral')">Sentiment: {{sentiment}} </div>
+  <div>Sentiment Score: {{sentimentScore}} </div>
+  <div>Text: {{text}} </div>
+</div>

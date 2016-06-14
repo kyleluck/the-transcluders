@@ -27,7 +27,8 @@ app.config(function($routeProvider) {
 app.controller('MainController', function($scope, Alchemy) {
   $scope.search = function(searchQuery) {
     cities.forEach(function(city) {
-      Alchemy.getData(city.name, searchQuery, function(response) {
+      //Alchemy.getData(city.name, searchQuery, function(response) {
+      Alchemy.getJsonFile(city.name, searchQuery, function(response) {
         if (response.data.status === "ERROR") {
           console.log('ERROR in API', response.data.statusInfo);
           return;
@@ -79,6 +80,11 @@ app.factory('Alchemy', function($http) {
           'q.enriched.url.text': searchQuery
 
         }
+      }).then(callback, errorCallback);
+    },
+    getJsonFile: function(city, searchQuery, callback, errorCallback) {
+      $http({
+        url: "json/" + city + ".json"
       }).then(callback, errorCallback);
     }
   };

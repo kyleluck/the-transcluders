@@ -24,6 +24,10 @@ app.config(function($routeProvider) {
   .when('/map', {
     templateUrl: 'map.html',
     controller: 'MapController'
+  })
+  .when('/analyzer', {
+    templateUrl: 'analyzer.html',
+    controller: 'AnalyzerControler'
   });
 });
 
@@ -63,6 +67,9 @@ app.controller('MainController', function($scope, Alchemy) {
     });
   });
 // });
+app.controller('AnalyzerControler', function($scope, Alchemy) {
+  
+});
 
 // MapController creates a map and circles for each city
 app.controller('MapController', function(GoogleMapsService) {

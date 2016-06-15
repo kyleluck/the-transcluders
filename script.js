@@ -31,12 +31,7 @@ app.config(function($routeProvider) {
     controller: 'AnalyzerController',
     activetab: 'analyzer'
   })
-  .when('/home', {
-    templateUrl: 'main.html',
-    controller: 'MainController',
-    activetab: 'search'
-  })
-  .otherwise({redirectTo: '/home'});
+  .otherwise({redirectTo: '/analyzer'});
 });
 
 //controller to show active tab depending on route
@@ -46,58 +41,6 @@ app.controller('RouteChangeController', function($scope, $route, $rootScope) {
     $scope.activetab = current.$$route.activetab;
   });
 });
-
-// MainController populates resultSet array with arrays of objects (articles)
-app.controller('MainController', function($scope, Alchemy) {
-  $scope.resultSet = [];
-
-  var searchQuery = 2; // REMEMBER TO FIX THIS
-  // $scope.search = function(searchQuery) {
-    cities.forEach(function(city) {
-      //Alchemy.getData(city.name, searchQuery, function(response) {
-      Alchemy.getJsonFile(city.name, searchQuery, function(response) {
-        // log error
-        if (response.data.status === "ERROR") {
-          console.log('Response status was ERROR', response.data.statusInfo);
-          return;
-        }
-        //push each city's result to resultSet array
-        $scope.resultSet.push(response.data.result.docs);
-        //calculate average Sentiment score
-        var avgSentiment = 0;
-        var totalSentiment = 0;
-        var numberArticles = 0;
-        var numberPostive = 0;
-        var numberNegative = 0;
-        var numberNeutral = 0;
-        response.data.result.docs.forEach(function(article) {
-          var sentimentScore = article.source.enriched.url.docSentiment.score;
-          if (article.source.enriched.url.docSentiment.type === 'positive') {
-            numberPostive++;
-          } else if (article.source.enriched.url.docSentiment.type === 'negative') {
-            numberNegative++;
-          } else {
-            numberNeutral++;
-          }
-          totalSentiment += sentimentScore;
-          numberArticles++;
-        });
-        city.numberArticles = numberArticles;
-        city.numberPostive = numberPostive;
-        city.numberNegative = numberNegative;
-        city.numberNeutral = numberNeutral;
-
-        avgSentiment = Number(totalSentiment / numberArticles);
-        //set avgSentiment per city
-        city.avgSentiment = avgSentiment;
-        console.log(response);
-      }, function(response) {
-        alert('API Error. Check Console!');
-        console.log('API Error was: ', response);
-      });
-    });
-  });
-// });
 
 app.controller('AnalyzerController', function($scope, Alchemy) {
   $scope.analyzeUrl = function(url) {
@@ -136,29 +79,74 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
 
 // MapController creates a map and circles for each city
 app.controller('MapController', function(GoogleMapsService, Alchemy, $scope) {
+  $scope.resultSet = [];
+
   var map = GoogleMapsService.createMap();
   GoogleMapsService.showLegend(map);
-  var fillColor;
-  var radiusSize;
+
+  //get articles for each city
   cities.forEach(function(city) {
-    if (city.avgSentiment >= 0.1) {
-      fillColor = "#8FB996"; //green for positive sentiment
-      radiusSize = city.numberPostive / city.numberArticles * 100;
-    } else if (city.avgSentiment <= -0.01) {
-      fillColor = "#A20900"; //red for negative sentiment
-      radiusSize = city.numberNegative / city.numberArticles * 100;
-    } else {
-      fillColor = "#0353A4"; //blue for neutral
-      radiusSize = city.numberNeutral / city.numberArticles * 100;
-    }
-    radiusSize *= 300000;
-    var circle = GoogleMapsService.createCircle("#ccc", fillColor, city.center, map, radiusSize); //parameters are strokeColor, fillColor, center, map
-    circle.addListener('click', function() {
-      Alchemy.getJsonFile(city.name, 'searchQuery', function(response) {
-        console.log(response);
-        $scope.cityName = city.name;
-        $scope.articles = response.data.result.docs;
+    //Alchemy.getData(city.name, searchQuery, function(response) {
+    Alchemy.getJsonFile(city.name, 'searchQuery', function(response) {
+      // log error
+      if (response.data.status === "ERROR") {
+        console.log('Response status was ERROR', response.data.statusInfo);
+        return;
+      }
+      //push each city's result to resultSet array
+      $scope.resultSet.push(response.data.result.docs);
+      //calculate average Sentiment score
+      var avgSentiment = 0;
+      var totalSentiment = 0;
+      var numberArticles = 0;
+      var numberPostive = 0;
+      var numberNegative = 0;
+      var numberNeutral = 0;
+      response.data.result.docs.forEach(function(article) {
+        var sentimentScore = article.source.enriched.url.docSentiment.score;
+        if (article.source.enriched.url.docSentiment.type === 'positive') {
+          numberPostive++;
+        } else if (article.source.enriched.url.docSentiment.type === 'negative') {
+          numberNegative++;
+        } else {
+          numberNeutral++;
+        }
+        totalSentiment += sentimentScore;
+        numberArticles++;
       });
+      city.numberArticles = numberArticles;
+      city.numberPostive = numberPostive;
+      city.numberNegative = numberNegative;
+      city.numberNeutral = numberNeutral;
+
+      avgSentiment = Number(totalSentiment / numberArticles);
+      //set avgSentiment per city
+      city.avgSentiment = avgSentiment;
+      var fillColor;
+      var radiusSize;
+      if (city.avgSentiment >= 0.1) {
+        fillColor = "#8FB996"; //green for positive sentiment
+        radiusSize = city.numberPostive / city.numberArticles * 100;
+      } else if (city.avgSentiment <= -0.01) {
+        fillColor = "#A20900"; //red for negative sentiment
+        radiusSize = city.numberNegative / city.numberArticles * 100;
+      } else {
+        fillColor = "#0353A4"; //blue for neutral
+        radiusSize = city.numberNeutral / city.numberArticles * 100;
+      }
+      radiusSize *= 300000;
+      var circle = GoogleMapsService.createCircle("#ccc", fillColor, city.center, map, radiusSize); //parameters are strokeColor, fillColor, center, map
+      circle.addListener('click', function() {
+        Alchemy.getJsonFile(city.name, 'searchQuery', function(response) {
+          console.log(response);
+          $scope.cityName = city.name;
+          $scope.articles = response.data.result.docs;
+        });
+      });
+      console.log(response);
+    }, function(response) {
+      alert('API Error. Check Console!');
+      console.log('API Error was: ', response);
     });
   });
 });

@@ -63,6 +63,11 @@ html, body {
   width: 12%;
   float: left;
 }
+.jumbotron {
+  background-image: url("grey_wash_wall.png");
+  text-align: center;
+}
+
 
 @media (max-width: 600px) {
   .sidebar {

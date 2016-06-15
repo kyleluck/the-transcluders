@@ -7,5 +7,13 @@
 <div ng-show="text" class="analyzer-results">
   <div ng-class="sentimentScore > 0 ? 'positive' : (sentimentScore < 0 ? 'negative' : 'neutral')">Sentiment: {{sentiment}} </div>
   <div>Sentiment Score: {{sentimentScore}} </div>
+  <div>
+    Emotions:
+    <img src="emotions/anger.png" ng-show="anger" alt="anger">
+    <img src="emotions/disgust.png" ng-show="disgust" alt="disgust">
+    <img src="emotions/fear.png" ng-show="fear" alt="fear">
+    <img src="emotions/joy.png" ng-show="joy" alt="joy">
+    <img src="emotions/sadness.png" ng-show="sadness" alt="sadness">
+  </div>
   <div>Text: {{text}} </div>
 </div>

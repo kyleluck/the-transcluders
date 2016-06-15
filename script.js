@@ -98,6 +98,25 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
       $scope.sentimentScore = response.data.docSentiment.score;
       $scope.text = response.data.text;
     });
+
+    Alchemy.getEmotions(url, function(response) {
+      console.log(response);
+      if (response.data.docEmotions.anger >= 0.5) {
+        $scope.anger = true;
+      }
+      if (response.data.docEmotions.disgust >= 0.5) {
+        $scope.disgust = true;
+      }
+      if (response.data.docEmotions.fear >= 0.5) {
+        $scope.fear = true;
+      }
+      if (response.data.docEmotions.joy >= 0.5) {
+        $scope.joy = true;
+      }
+      if (response.data.docEmotions.sadness >= 0.5) {
+        $scope.sadness = true;
+      }
+    });
   };
 });
 
@@ -118,7 +137,7 @@ app.controller('MapController', function(GoogleMapsService) {
       fillColor = "#0353A4"; //blue for neutral
       radiusSize = city.numberNeutral / city.numberArticles * 100;
     }
-    radiusSize *= 400000;
+    radiusSize *= 300000;
     GoogleMapsService.createCircle("#ccc", fillColor, city.center, map, radiusSize); //parameters are strokeColor, fillColor, center, map
   });
 });
@@ -157,6 +176,16 @@ app.factory('Alchemy', function($http) {
           url: url,
           outputMode: 'json',
           showSourceText: 1
+        }
+      }).then(callback);
+    },
+    getEmotions: function(url, callback) {
+      $http({
+        url: "http://gateway-a.watsonplatform.net/calls/url/URLGetEmotion",
+        params: {
+          apikey: APIKEY,
+          url: url,
+          outputMode: 'json'
         }
       }).then(callback);
     }

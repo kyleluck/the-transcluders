@@ -47,7 +47,9 @@ app.controller('RouteChangeController', function($scope, $route, $rootScope) {
   });
 });
 
+// analyzer controller depends on the alchemy service and handles storing service results on the scope.
 app.controller('AnalyzerController', function($scope, Alchemy) {
+  // analyzeUrl is called when the form is submitted on url-analyzer.
   $scope.analyzeUrl = function(url) {
     Alchemy.urlData(url, function(response) {
       $scope.sentiment = response.data.docSentiment.type;
@@ -55,6 +57,7 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
       $scope.text = response.data.text;
     });
 
+    //retrieve emotion results from the url
     Alchemy.getEmotions(url, function(response) {
       $scope.anger = false;
       $scope.disgust = false;
@@ -62,7 +65,7 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
       $scope.joy = false;
       $scope.sadness = false;
 
-      console.log(response);
+      //logic to display emotion icons
       if (response.data.docEmotions.anger >= 0.5) {
         $scope.anger = true;
       }
@@ -81,6 +84,7 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
     });
   }; //end analyzeUrl function
 
+  // analyzeText is called when the form is submitted on text-analyzer.
   $scope.analyzeText = function(text) {
     Alchemy.textData(text, function(response) {
       console.log(response);
@@ -88,6 +92,8 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
       $scope.sentimentScore = response.data.docSentiment.score;
       $scope.text = response.data.text;
       $scope.stars = 0;
+
+      //logic display number of stars from the submitted text
       if($scope.sentimentScore === 1) {
         $scope.stars = 5;
       } else if ($scope.sentimentScore >= 0.75) {
@@ -133,7 +139,7 @@ app.controller('MapController', function(GoogleMapsService, Alchemy, $scope) {
       }
       //push each city's result to resultSet array
       $scope.resultSet.push(response.data.result.docs);
-      //calculate average Sentiment score
+      //calculate average Sentiment score, calculating number of positive, negative, neutral articles and the number of total articles.
       var avgSentiment = 0;
       var totalSentiment = 0;
       var numberArticles = 0;
@@ -160,6 +166,7 @@ app.controller('MapController', function(GoogleMapsService, Alchemy, $scope) {
       avgSentiment = Number(totalSentiment / numberArticles);
       //set avgSentiment per city
       city.avgSentiment = avgSentiment;
+      // figuring out the radiusSize for circle based on ratio of positive, negative and neutral articles to total articles
       var fillColor;
       var radiusSize;
       if (city.avgSentiment >= 0.1) {
@@ -175,6 +182,7 @@ app.controller('MapController', function(GoogleMapsService, Alchemy, $scope) {
       radiusSize *= 300000;
       var circle = GoogleMapsService.createCircle("#ccc", fillColor, city.center, map, radiusSize); //parameters are strokeColor, fillColor, center, map
       bounds.extend(circle.getCenter()); //gets the center of a circle
+      // add event listener to display city articles when the circle is clicked
       circle.addListener('click', function() {
         Alchemy.getJsonFile(city.name, 'searchQuery', function(response) {
           console.log(response);
@@ -194,6 +202,9 @@ app.controller('MapController', function(GoogleMapsService, Alchemy, $scope) {
 // Alchemy service calls AlchemyAPI with proper parameters
 // getData method calls the API
 // getJsonFile gets data from /json/<city>.json
+// urlData method calls the API to return a sentiment for a specific URL
+// textData method calls the API to return a sentiment from a review/text
+// getEmotions methods calls the API to return an emotion from articles in cities
 app.factory('Alchemy', function($http) {
   return {
     getData: function(city, searchQuery, callback, errorCallback) {
@@ -206,7 +217,6 @@ app.factory('Alchemy', function($http) {
           end: "now",
           count: 5,
           return: "enriched",
-          // 'q.enriched.url.text': "A[" + city + "^" + searchQuery+ "]"
           'q.enriched.url.title': city,
           'q.enriched.url.text': searchQuery
         }

@@ -26,12 +26,17 @@ app.config(function($routeProvider) {
     controller: 'MapController',
     activetab: 'map'
   })
-  .when('/analyzer', {
-    templateUrl: 'analyzer.html',
+  .when('/url-analyzer', {
+    templateUrl: 'url-analyzer.html',
     controller: 'AnalyzerController',
-    activetab: 'analyzer'
+    activetab: 'url-analyzer'
   })
-  .otherwise({redirectTo: '/analyzer'});
+  .when('/text-analyzer', {
+    templateUrl: 'text-analyzer.html',
+    controller: 'AnalyzerController',
+    activetab: 'text-analyzer'
+  })
+  .otherwise({redirectTo: '/url-analyzer'});
 });
 
 //controller to show active tab depending on route
@@ -74,7 +79,17 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
         $scope.sadness = true;
       }
     });
+  }; //end analyzeUrl function
+
+  $scope.analyzeText = function(text) {
+    Alchemy.textData(text, function(response) {
+      console.log(response);
+      $scope.sentiment = response.data.docSentiment.type;
+      $scope.sentimentScore = response.data.docSentiment.score;
+      $scope.text = response.data.text;
+    });
   };
+
 });
 
 // MapController creates a map and circles for each city
@@ -187,6 +202,17 @@ app.factory('Alchemy', function($http) {
         params: {
           apikey: APIKEY,
           url: url,
+          outputMode: 'json',
+          showSourceText: 1
+        }
+      }).then(callback);
+    },
+    textData: function(text, callback) {
+      $http({
+        url: 'http://gateway-a.watsonplatform.net/calls/text/TextGetTextSentiment',
+        params: {
+          apikey: APIKEY,
+          text: text,
           outputMode: 'json',
           showSourceText: 1
         }

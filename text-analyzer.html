@@ -1,0 +1,33 @@
+<h4>Enter text, such as a review, to analyze sentiment.</h4>
+
+<form ng-submit="analyzeText(textArea)" class="form-tabs">
+  <textarea class="form-control" rows="5" ng-model="textArea"></textarea>
+  <button type="submit">Analyze</button>
+</form>
+<div ng-show="text" class="analyzer-results">
+  <div ng-class="sentimentScore > 0 ? 'positive' : (sentimentScore < 0 ? 'negative' : 'neutral')">Sentiment: {{sentiment}} </div>
+  <div>Sentiment Score: {{sentimentScore}} </div>
+  <div>
+    <div class="imgHolder" ng-show="anger">
+      <img src="emotions/anger.png" alt="anger">
+      <span>Anger</span>
+    </div>
+    <div class="imgHolder" ng-show="disgust">
+      <img src="emotions/disgust.png" alt="disgust">
+      <span>Disgust</span>
+    </div>
+    <div class="imgHolder" ng-show="fear">
+      <img src="emotions/fear.png" alt="fear">
+      <span>Fear</span>
+    </div>
+    <div class="imgHolder" ng-show="joy">
+      <img src="emotions/joy.png" alt="joy">
+      <span>Joy</span>
+    </div>
+    <div class="imgHolder" ng-show="sadness">
+      <img src="emotions/sadness.png" alt="sadness">
+      <span>Sadness</span>
+    </div>
+  </div>
+  <div class="articleText">Text: {{text}} </div>
+</div>

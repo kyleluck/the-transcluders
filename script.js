@@ -152,12 +152,14 @@ app.controller('MapController', function(GoogleMapsService, Alchemy, $scope) {
       radiusSize = city.numberNeutral / city.numberArticles * 100;
     }
     radiusSize *= 300000;
-    GoogleMapsService.createCircle("#ccc", fillColor, city.center, map, radiusSize); //parameters are strokeColor, fillColor, center, map
-  });
-  Alchemy.getJsonFile('Atlanta', 'searchQuery', function(response) {
-    console.log(response);
-    $scope.articles = response.data.result.docs;
-
+    var circle = GoogleMapsService.createCircle("#ccc", fillColor, city.center, map, radiusSize); //parameters are strokeColor, fillColor, center, map
+    circle.addListener('click', function() {
+      Alchemy.getJsonFile(city.name, 'searchQuery', function(response) {
+        console.log(response);
+        $scope.cityName = city.name;
+        $scope.articles = response.data.result.docs;
+      });
+    });
   });
 });
 

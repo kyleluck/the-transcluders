@@ -7,6 +7,8 @@
     <h1>{{cityName}}</h1>
       <div ng-repeat="article in articles">
         <h4>{{article.source.enriched.url.cleanedTitle}}</h4>
+        <p ng-class="{{article.source.enriched.url.docSentiment.score}} > 0 ? 'positive' : ({{article.source.enriched.url.docSentiment.score}} < 0 ? 'negative' : 'neutral')">Sentiment: {{article.source.enriched.url.docSentiment.type}}</p>
+        <p>Sentiment Score: {{article.source.enriched.url.docSentiment.score}}</p>
         <p><a href="{{article.source.enriched.url.url}}">Link</a></p>
         <hr>
       </div>

@@ -8,12 +8,26 @@
   <div ng-class="sentimentScore > 0 ? 'positive' : (sentimentScore < 0 ? 'negative' : 'neutral')">Sentiment: {{sentiment}} </div>
   <div>Sentiment Score: {{sentimentScore}} </div>
   <div>
-    Emotions:
-    <img src="emotions/anger.png" ng-show="anger" alt="anger">
-    <img src="emotions/disgust.png" ng-show="disgust" alt="disgust">
-    <img src="emotions/fear.png" ng-show="fear" alt="fear">
-    <img src="emotions/joy.png" ng-show="joy" alt="joy">
-    <img src="emotions/sadness.png" ng-show="sadness" alt="sadness">
+    <div class="imgHolder" ng-show="anger">
+      <img src="emotions/anger.png" alt="anger">
+      <span>Anger</span>
+    </div>
+    <div class="imgHolder" ng-show="disgust">
+      <img src="emotions/disgust.png" alt="disgust">
+      <span>Disgust</span>
+    </div>
+    <div class="imgHolder" ng-show="fear">
+      <img src="emotions/fear.png" alt="fear">
+      <span>Fear</span>
+    </div>
+    <div class="imgHolder" ng-show="joy">
+      <img src="emotions/joy.png" alt="joy">
+      <span>Joy</span>
+    </div>
+    <div class="imgHolder" ng-show="sadness">
+      <img src="emotions/sadness.png" alt="sadness">
+      <span>Sadness</span>
+    </div>
   </div>
-  <div>Text: {{text}} </div>
+  <div class="articleText">Text: {{text}} </div>
 </div>

@@ -87,6 +87,27 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
       $scope.sentiment = response.data.docSentiment.type;
       $scope.sentimentScore = response.data.docSentiment.score;
       $scope.text = response.data.text;
+      $scope.stars = 0;
+      if($scope.sentimentScore === 1) {
+        $scope.stars = 5;
+      } else if ($scope.sentimentScore >= 0.75) {
+        $scope.stars = 4.5;
+      } else if ($scope.sentimentScore >= 0.5) {
+        $scope.stars = 4;
+      } else if ($scope.sentimentScore >= 0.25) {
+        $scope.stars = 3.5;
+      } else if ($scope.sentimentScore >= 0) {
+        $scope.stars = 3;
+      } else if ($scope.sentimentScore >= -0.25) {
+        $scope.stars = 2.5;
+      } else if ($scope.sentimentScore >= -0.5) {
+        $scope.stars = 2;
+      } else if ($scope.sentimentScore >= -0.75) {
+        $scope.stars = 1.5;
+      } else {
+        $scope.stars = 1;
+      }
+      $scope.starsImg = "stars/" + $scope.stars + ".png";
     });
   };
 

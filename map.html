@@ -7,9 +7,10 @@
 <div class="col col-xs-3">
   <div id="sidebar" class="sidebar">
     <h1>Name of City</h1>
-      <div>
-        <h4>Title</h4>
-        <p>link</p>
+      <div ng-repeat="article in articles">
+        <h4>{{article.source.enriched.url.cleanedTitle}}</h4>
+        <p><a href="{{article.source.enriched.url.url}}">Link</a></p>
+        <hr>
       </div>
   </div>
 </div>

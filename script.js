@@ -135,7 +135,7 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
 });
 
 // MapController creates a map and circles for each city
-app.controller('MapController', function(GoogleMapsService, Alchemy) {
+app.controller('MapController', function(GoogleMapsService, Alchemy, $scope) {
   var map = GoogleMapsService.createMap();
   GoogleMapsService.showLegend(map);
   var fillColor;
@@ -154,8 +154,10 @@ app.controller('MapController', function(GoogleMapsService, Alchemy) {
     radiusSize *= 300000;
     GoogleMapsService.createCircle("#ccc", fillColor, city.center, map, radiusSize); //parameters are strokeColor, fillColor, center, map
   });
-  Alchemy.getJsonFile(city.name, searchQuery, function(response) {
-    
+  Alchemy.getJsonFile('Atlanta', 'searchQuery', function(response) {
+    console.log(response);
+    $scope.articles = response.data.result.docs;
+
   });
 });
 

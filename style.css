@@ -54,3 +54,7 @@ html, body {
 .articleText {
   clear: left;
 }
+.sidebar {
+  overflow: auto;
+  height: 600px;
+}

@@ -100,6 +100,12 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
     });
 
     Alchemy.getEmotions(url, function(response) {
+      $scope.anger = false;
+      $scope.disgust = false;
+      $scope.fear = false;
+      $scope.joy = false;
+      $scope.sadness = false;
+      
       console.log(response);
       if (response.data.docEmotions.anger >= 0.5) {
         $scope.anger = true;

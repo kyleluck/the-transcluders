@@ -135,7 +135,7 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
 });
 
 // MapController creates a map and circles for each city
-app.controller('MapController', function(GoogleMapsService) {
+app.controller('MapController', function(GoogleMapsService, Alchemy) {
   var map = GoogleMapsService.createMap();
   GoogleMapsService.showLegend(map);
   var fillColor;
@@ -153,6 +153,9 @@ app.controller('MapController', function(GoogleMapsService) {
     }
     radiusSize *= 300000;
     GoogleMapsService.createCircle("#ccc", fillColor, city.center, map, radiusSize); //parameters are strokeColor, fillColor, center, map
+  });
+  Alchemy.getJsonFile(city.name, searchQuery, function(response) {
+    
   });
 });
 

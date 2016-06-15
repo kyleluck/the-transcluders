@@ -40,3 +40,17 @@ html, body {
 .analyzer-results div {
   margin-bottom: 10px;
 }
+.imgHolder {
+  position: relative;
+  float: left;
+  margin-right: 5px;
+}
+.imgHolder span {
+  position: absolute;
+  left: 30px;
+  bottom: 2px;
+  color: white;
+}
+.articleText {
+  clear: left;
+}

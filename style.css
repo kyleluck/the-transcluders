@@ -58,3 +58,12 @@ html, body {
   overflow: auto;
   height: 600px;
 }
+
+@media (max-width: 600px) {
+  .sidebar {
+    height: 400px;
+  }
+  .map {
+    height: 400px;
+  }
+}

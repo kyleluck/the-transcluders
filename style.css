@@ -67,7 +67,9 @@ html, body {
   background-image: url("grey_wash_wall.png");
   text-align: center;
 }
-
+.jumbotron h3 {
+  color: #96999b;
+}
 
 @media (max-width: 600px) {
   .sidebar {

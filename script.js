@@ -83,6 +83,8 @@ app.controller('MapController', function(GoogleMapsService, Alchemy, $scope) {
 
   var map = GoogleMapsService.createMap();
   GoogleMapsService.showLegend(map);
+  // variable to set zoom level depending on screen size
+  var bounds = new google.maps.LatLngBounds();
 
   //get articles for each city
   cities.forEach(function(city) {
@@ -136,6 +138,7 @@ app.controller('MapController', function(GoogleMapsService, Alchemy, $scope) {
       }
       radiusSize *= 300000;
       var circle = GoogleMapsService.createCircle("#ccc", fillColor, city.center, map, radiusSize); //parameters are strokeColor, fillColor, center, map
+      bounds.extend(circle.getCenter()); //gets the center of a circle
       circle.addListener('click', function() {
         Alchemy.getJsonFile(city.name, 'searchQuery', function(response) {
           console.log(response);
@@ -143,6 +146,7 @@ app.controller('MapController', function(GoogleMapsService, Alchemy, $scope) {
           $scope.articles = response.data.result.docs;
         });
       });
+      map.fitBounds(bounds); // sets zoom for the map so that all circles are visible
       console.log(response);
     }, function(response) {
       alert('API Error. Check Console!');
@@ -210,8 +214,8 @@ app.factory('GoogleMapsService', function() {
     createMap: function() {
       var mapElement = document.getElementById('map');
       return new google.maps.Map(mapElement, {
-        center: {lat: 39.099727, lng: -94.578567},
-        zoom: 4
+        center: {lat: 39.099727, lng: -94.578567}
+        // zoom: 4
       });
     },
     createCircle: function(strokeColor, fillColor, center, map, population) {

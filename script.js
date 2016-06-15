@@ -15,6 +15,9 @@ var cities = [
 // define angular app
 var app = angular.module('app', ['ngRoute']);
 
+//global variable to test active class on pills
+var activetab;
+
 // define routing
 app.config(function($routeProvider) {
   $routeProvider
@@ -36,13 +39,18 @@ app.config(function($routeProvider) {
   .otherwise({redirectTo: '/home'});
 });
 
-// MainController populates resultSet array with arrays of objects (articles)
-app.controller('MainController', function($scope, Alchemy, $route) {
-  $scope.resultSet = [];
+//controller to show active tab depending on route
+app.controller('RouteChangeController', function($scope, $route, $rootScope) {
   //change activetab when route changes
-  $scope.$on("$routeChangeSuccess", function(event, current, previous) {
+  $rootScope.$on("$routeChangeSuccess", function(event, current, previous) {
     $scope.activetab = current.$$route.activetab;
   });
+});
+
+// MainController populates resultSet array with arrays of objects (articles)
+app.controller('MainController', function($scope, Alchemy) {
+  $scope.resultSet = [];
+
   var searchQuery = 2; // REMEMBER TO FIX THIS
   // $scope.search = function(searchQuery) {
     cities.forEach(function(city) {
@@ -105,7 +113,7 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
       $scope.fear = false;
       $scope.joy = false;
       $scope.sadness = false;
-      
+
       console.log(response);
       if (response.data.docEmotions.anger >= 0.5) {
         $scope.anger = true;

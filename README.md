@@ -44,7 +44,8 @@ We utilized [Mob Programming](https://en.wikipedia.org/wiki/Mob_programming) thr
 ![map analyzer](https://github.com/DigitalCrafts-May-2016-Cohort/the-transcluders/blob/master/images/map-analyzer.png)
 
 ## Contribute to this project
-1. Add process to automate creation of city json files.
+1. Move Firebase code into Angular
+2. Add process to automate creation of city json files.
 2. Allow user to choose which cities are analyzer on the map analyzer.
 3. Robust error handling.
 

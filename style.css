@@ -103,6 +103,14 @@ html, body {
 .companies{
   text-align: center;
 }
+.screens {
+  /*background-color: grey;*/
+
+}
+.screenshots {
+  width: 100%;
+  box-shadow: 0 10px 6px -6px #777;
+}
 @media (max-width: 600px) {
   .sidebar {
     height: 400px;

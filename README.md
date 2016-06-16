@@ -11,6 +11,7 @@ Emotion is displayed with icons and can be one or more of the following values: 
 ## Technologies
 * [AlchemyAPI](http://www.alchemyapi.com/) is utilized throughout SentiMotion to analyze sentiment and emotion. Examples of AlchemyAPI methods used are: GetNews, URLGetTextSentiment, TextGetTextSentiment, URLGetEmotion.
 * [Google Maps API](https://developers.google.com/maps/documentation/javascript/) is used in our Map module to display the map and circles.
+* [Firebase](https://firebase.google.com/) is used to handle user authentication.
 
 ## Frameworks
 * Bootstrap

@@ -15,6 +15,7 @@ Emotion is displayed with icons and can be one or more of the following values: 
 ## Frameworks
 * Bootstrap
 * AngularJS
+* jQuery
 
 ## Programming Languages
 * JavaScript
@@ -41,3 +42,7 @@ We utilized [Mob Programming](https://en.wikipedia.org/wiki/Mob_programming) thr
 ### Map Analyzer
 ![map analyzer](https://github.com/DigitalCrafts-May-2016-Cohort/the-transcluders/blob/master/images/map-analyzer.png)
 
+## Contribute to this project
+1. Add process to automate creation of city json files.
+2. Allow user to choose which cities are analyzer on the map analyzer.
+3. Robust error handling.

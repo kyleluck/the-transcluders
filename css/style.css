@@ -134,6 +134,10 @@ html, body {
 .row {
   margin-bottom: 20px;
 }
+.loginButton {
+  margin-top: 8px;
+  margin-right: 8px;
+}
 @media (max-width: 600px) {
   .sidebar {
     height: 400px;

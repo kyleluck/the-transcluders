@@ -18,6 +18,7 @@
             <li ng-class="{active: activetab == 'text-analyzer'}"><a href="#/text-analyzer">Text Analyzer</a></li>
             <li ng-class="{active: activetab == 'map'}"><a href="#/map">Map</a></li>
           </ul>
+          <button type="button" class="btn btn-primary logoutButton" onclick="logoutUser()">Logout</button>
           <div class="clearfix"></div>
           <ng-view></ng-view>
         </div>
@@ -27,5 +28,39 @@
     <script src="js/angular.js"></script>
     <script src="js/angular-route.js"></script>
     <script src="js/script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyBuSmX1FIiUm4Gk0dQwOEgboeU3tkyd0fI",
+        authDomain: "project-2289255609511513714.firebaseapp.com",
+        databaseURL: "https://project-2289255609511513714.firebaseio.com",
+        storageBucket: "project-2289255609511513714.appspot.com"
+      };
+      firebase.initializeApp(config);
+
+      function logoutUser() {
+        firebase.auth().signOut().then(function() {
+         // Sign-out successful.
+         console.log('success');
+         window.location = 'index.html';
+        }, function(error) {
+         // An error happened.
+         console.log('error');
+        });
+      }
+
+      function checkUserState() {
+        firebase.auth().onAuthStateChanged(function(user) {
+         if (user) {
+           // User is signed in.
+           console.log(user + 'is signed in');
+         } else {
+           // No user is signed in.
+           console.log(user + 'is not signed in');
+         }
+        });
+      }
+    </script>
   </body>
 </html>

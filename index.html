@@ -40,17 +40,17 @@
       <div class="row" id="feature-row">
         <!-- features -->
         <div class="col col-xs-12 col-md-4 feature-div">
-          <img src="images/news.png" class="feature-icon">
+          <img src="images/news.png" class="feature-icon" id="url-icon">
           <h3>URL Analyzer</h3>
           <p>Analyze a provided url to a news story and display sentiment type, sentiment score, and emotion found within the text.</p>
         </div>
         <div class="col col-xs-12 col-md-4 feature-div">
-          <img src="images/text.png" class="feature-icon">
+          <img src="images/text.png" class="feature-icon" id="text-icon">
           <h3>Text Analyzer</h3>
           <p>Analyze a provided block of text and display sentiment type, sentiment score, and the number of stars based on the sentiment score. The stars represent a suggested rating if the block of text was a review.</p>
         </div>
         <div class="col col-xs-12 col-md-4 feature-div">
-          <img src="images/map.png" class="feature-icon">
+          <img src="images/map.png" class="feature-icon" id="map-icon">
           <h3>Map</h3>
           <p>Displays average sentiment for 100 articles across 5 cities. The size of the circle is dependent on the ratio of positive, negative, or neutral articles to the overall number of articles for each city.</p>
         </div>
@@ -60,7 +60,7 @@
 
       <div class="screens row">
         <div class="col col-xs-12 col-md-6">
-          <img src="images/url-analyzer.png" class="screenshots">
+          <img src="images/url-analyzer.png" class="screenshots" id="url-screen">
         </div>
         <div class="col col-xs-12 col-md-6">
           <div class="description">
@@ -78,13 +78,13 @@
           </div>
         </div>
         <div class="col col-xs-12 col-md-6">
-          <img src="images/text-analyzer.png" class="screenshots">
+          <img src="images/text-analyzer.png" class="screenshots" id="text-screen">
         </div>
       </div>
 
       <div class="screens row">
         <div class="col col-xs-12 col-md-6">
-          <img src="images/map-analyzer.png" class="screenshots">
+          <img src="images/map-analyzer.png" class="screenshots" id="map-screen">
         </div>
         <div class="col col-xs-12 col-md-6">
           <div class="description">
@@ -142,6 +142,24 @@
     $("#scroll-button").click(function() {
         $('html,body').animate({
             scrollTop: $("#feature-row").offset().top - 80},
+            'slow');
+    });
+
+    $("#url-icon").click(function() {
+        $('html,body').animate({
+            scrollTop: $("#url-screen").offset().top - 60},
+            'slow');
+    });
+
+    $("#text-icon").click(function() {
+        $('html,body').animate({
+            scrollTop: $("#text-screen").offset().top - 60},
+            'slow');
+    });
+
+    $("#map-icon").click(function() {
+        $('html,body').animate({
+            scrollTop: $("#map-screen").offset().top - 60},
             'slow');
     });
     </script>

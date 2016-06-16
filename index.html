@@ -7,8 +7,7 @@
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="css/style.css" media="screen" title="no title" charset="utf-8">
-    <script src="js/jquery.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+
   </head>
   <body>
     <div class="jumbotron">
@@ -28,7 +27,6 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <!-- <li><a href="product.html">Login</a></li> -->
               <li><button type="button" class="btn btn-primary loginButton" data-toggle="modal" data-target="#loginModal">Login</button></li>
             </ul>
           </div><!-- /.navbar-collapse -->
@@ -49,12 +47,12 @@
               <h4 class="modal-title">Login</h4>
             </div>
             <div class="modal-body">
-              <input type="text" placeholder="Username...">
-              <input type="password" placeholder="Password...">
+              <input type="text" placeholder="Username..." id="username">
+              <input type="password" placeholder="Password..." id="password">
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <a href="product.html" class="btn btn-primary">Login</a>
+              <a href="#" class="btn btn-primary" onclick="authUser()">Login</a>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -162,6 +160,37 @@
         </div>
       </div>
     </div>
+
+    <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyBuSmX1FIiUm4Gk0dQwOEgboeU3tkyd0fI",
+        authDomain: "project-2289255609511513714.firebaseapp.com",
+        databaseURL: "https://project-2289255609511513714.firebaseio.com",
+        storageBucket: "project-2289255609511513714.appspot.com"
+      };
+      firebase.initializeApp(config);
+
+
+      function authUser() {
+        var email = $('#username').val();
+        var password = $('#password').val();
+        firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
+          //successfully logged in
+          window.location = 'product.html';
+        }).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          alert('Invalid username or password. Please try again.');
+          console.log('Error: ', errorMessage);
+        });
+      }
+
+    </script>
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script>
     $("#scroll-button").click(function() {
         $('html,body').animate({

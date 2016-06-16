@@ -28,3 +28,16 @@ Emotion is displayed with icons and can be one or more of the following values: 
 
 We utilized [Mob Programming](https://en.wikipedia.org/wiki/Mob_programming) throughout the development of SentiMotion.
 
+## Screenshots
+### Landing Page
+![landing page](https://github.com/DigitalCrafts-May-2016-Cohort/the-transcluders/blob/master/images/landing-page.png)
+
+### URL Analyzer
+![url analyzer](https://github.com/DigitalCrafts-May-2016-Cohort/the-transcluders/blob/master/images/url-analyzer.png)
+
+### Text Analyzer
+![text analyzer](https://github.com/DigitalCrafts-May-2016-Cohort/the-transcluders/blob/master/images/text-analyzer.png)
+
+### Map Analyzer
+![map analyzer](https://github.com/DigitalCrafts-May-2016-Cohort/the-transcluders/blob/master/images/map-analyzer.png)
+

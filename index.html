@@ -27,7 +27,8 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><button type="button" class="btn btn-primary loginButton" data-toggle="modal" data-target="#loginModal">Login</button></li>
+              <li><button type="button" class="btn btn-primary userButton" data-toggle="modal" data-target="#loginModal">Login</button></li>
+              <li><button type="button" class="btn btn-primary userButton" data-toggle="modal" data-target="#createUserModal">Create Account</button></li>
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -58,6 +59,27 @@
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
       <!-- end login modal -->
+
+      <!-- create account modal -->
+      <div class="modal fade" tabindex="-1" role="dialog" id="createUserModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Create an Account</h4>
+            </div>
+            <div class="modal-body">
+              <input type="text" placeholder="Email..." id="createUserEmail">
+              <input type="password" placeholder="Password..." id="createUserPassword">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelCreateUser">Cancel</button>
+              <a href="#" class="btn btn-primary" onclick="createUser()">Create Account</a>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+      <!-- end create account modal -->
 
       <div class="row" id="feature-row">
         <!-- features -->
@@ -185,6 +207,22 @@
           var errorMessage = error.message;
           alert('Invalid username or password. Please try again.');
           console.log('Error: ', errorMessage);
+        });
+      }
+
+
+      function createUser() {
+        var email = $('#createUserEmail').val();
+        var password = $('#createUserPassword').val();
+        firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
+          alert('You have successfully created an account. Please login.');
+          $('#createUserModal').modal('hide');
+        }).catch(function(error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          alert('There was an error: ' + errorMessage);
+          console.log('errorCode: ', errorCode);
         });
       }
 

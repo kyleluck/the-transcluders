@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="css/style.css" media="screen" title="no title" charset="utf-8">
     <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
   </head>
   <body>
     <div class="jumbotron">
@@ -27,7 +28,8 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="product.html">Login</a></li>
+              <!-- <li><a href="product.html">Login</a></li> -->
+              <li><button type="button" class="btn btn-primary loginButton" data-toggle="modal" data-target="#loginModal">Login</button></li>
             </ul>
           </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
@@ -37,6 +39,28 @@
       <a href="#" class="btn btn-primary" role="button" id="scroll-button"><span class="glyphicon glyphicon-chevron-down"></span></a>
     </div>
     <div class="container">
+
+      <!-- login modal -->
+      <div class="modal fade" tabindex="-1" role="dialog" id="loginModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <h4 class="modal-title">Login</h4>
+            </div>
+            <div class="modal-body">
+              <input type="text" placeholder="Username...">
+              <input type="password" placeholder="Password...">
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <a href="product.html" class="btn btn-primary">Login</a>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+      <!-- end login modal -->
+
       <div class="row" id="feature-row">
         <!-- features -->
         <div class="col col-xs-12 col-md-4 feature-div">

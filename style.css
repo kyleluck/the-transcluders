@@ -100,6 +100,9 @@ html, body {
 .divider {
   border-top: 12px solid #eee;
 }
+.companies{
+  text-align: center;
+}
 @media (max-width: 600px) {
   .sidebar {
     height: 400px;

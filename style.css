@@ -103,13 +103,36 @@ html, body {
 .companies{
   text-align: center;
 }
-.screens {
-  /*background-color: grey;*/
-
+.description {
+  margin-top: 20%;
+  text-align: justify;
 }
 .screenshots {
   width: 100%;
-  box-shadow: 0 10px 6px -6px #777;
+  /*box-shadow: 0 10px 6px -6px #777;*/
+  position:relative;
+  box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+.screenshots:before, .screenshots:after
+{
+	content:"";
+    position:absolute;
+    z-index:-1;
+    box-shadow:0 0 20px rgba(0,0,0,0.8);
+    top:0;
+    bottom:0;
+    left:10px;
+    right:10px;
+    border-radius:100px / 10px;
+}
+.screenshots:after
+{
+    right:10px;
+    left:auto;
+    transform:skew(8deg) rotate(3deg);
+}
+.row {
+  margin-bottom: 20px;
 }
 @media (max-width: 600px) {
   .sidebar {

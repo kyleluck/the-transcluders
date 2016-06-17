@@ -115,7 +115,9 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
 app.controller('RouteChangeController', ['$scope','$route', '$rootScope', function(sc, $route, $rootScope) {
   //change activetab when route changes
   $rootScope.$on("$routeChangeSuccess", function(event, current, previous) {
-    sc.activetab = current.$$route.activetab;
+    if (current.$$route != null) {
+      sc.activetab = current.$$route.activetab;
+    }
   });
 }]);
 

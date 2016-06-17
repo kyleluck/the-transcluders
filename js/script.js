@@ -39,14 +39,6 @@ app.config(function($routeProvider) {
   .otherwise({redirectTo: '/url-analyzer'});
 });
 
-//controller to show active tab depending on route
-app.controller('RouteChangeController', function($scope, $route, $rootScope) {
-  //change activetab when route changes
-  $rootScope.$on("$routeChangeSuccess", function(event, current, previous) {
-    $scope.activetab = current.$$route.activetab;
-  });
-});
-
 // analyzer controller depends on the alchemy service and handles storing service results on the scope.
 app.controller('AnalyzerController', function($scope, Alchemy) {
   // analyzeUrl is called when the form is submitted on url-analyzer.
@@ -118,6 +110,14 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
   };
 
 });
+
+//controller to show active tab depending on route
+app.controller('RouteChangeController', ['$scope','$route', '$rootScope', function(sc, $route, $rootScope) {
+  //change activetab when route changes
+  $rootScope.$on("$routeChangeSuccess", function(event, current, previous) {
+    sc.activetab = current.$$route.activetab;
+  });
+}]);
 
 // MapController creates a map and circles for each city
 app.controller('MapController', function(GoogleMapsService, Alchemy, $scope) {

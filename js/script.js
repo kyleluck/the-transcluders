@@ -272,7 +272,6 @@ app.factory('GoogleMapsService', function() {
       var mapElement = document.getElementById('map');
       return new google.maps.Map(mapElement, {
         center: {lat: 39.099727, lng: -94.578567}
-        // zoom: 4
       });
     },
     createCircle: function(strokeColor, fillColor, center, map, population) {

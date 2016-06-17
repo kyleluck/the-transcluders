@@ -25,6 +25,7 @@
       </div>
     </div>
 
+    <script src="js/jquery.js"></script>
     <script src="js/angular.js"></script>
     <script src="js/angular-route.js"></script>
     <script src="js/script.js"></script>
@@ -38,6 +39,29 @@
         storageBucket: "project-2289255609511513714.appspot.com"
       };
       firebase.initializeApp(config);
+
+      //create reference to firebase database
+      var database = firebase.database();
+
+      function saveReview() {
+        var review = $('textarea').val();
+        var sentimentScore = $('#sentimentScore').text().split(' ');
+        sentimentScore = sentimentScore[2];
+        var sentimentType = $('#sentimentType').attr('class').split(' ');
+        sentimentType = sentimentType[1];
+        var stars = $('#starsImage').attr('src').split('/');
+        stars = stars[1].substring(0, 3);
+
+        //change userId
+        var userId = 'kyle';
+
+        firebase.database().ref('reviews/' + userId).set({
+          review: review,
+          stars: stars,
+          sentimentScore: sentimentScore,
+          sentimentType: sentimentType
+        });
+      }
 
       function logoutUser() {
         firebase.auth().signOut().then(function() {

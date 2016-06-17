@@ -3,11 +3,12 @@
 <form ng-submit="analyzeText(textArea)" class="form-tabs">
   <textarea class="form-control" rows="5" ng-model="textArea"></textarea>
   <button type="submit">Analyze</button>
+  <button type="button" onclick="saveReview()">Save Review</button>
 </form>
 <div ng-show="text" class="analyzer-results">
-  <img ng-src="{{starsImg}}" ng-show="showStars"> <!--display stars -->
-  <div ng-class="sentimentScore > 0 ? 'positive' : (sentimentScore < 0 ? 'negative' : 'neutral')">Sentiment: {{sentiment}} </div>
-  <div>Sentiment Score: {{sentimentScore}} </div>
+  <img ng-src="{{starsImg}}" ng-show="showStars" id="starsImage"> <!--display stars -->
+  <div id="sentimentType" ng-class="sentimentScore > 0 ? 'positive' : (sentimentScore < 0 ? 'negative' : 'neutral')">Sentiment: {{sentiment}} </div>
+  <div id="sentimentScore">Sentiment Score: {{sentimentScore}} </div>
   <div>
     <div class="imgHolder" ng-show="anger">
       <img src="emotions/anger.png" alt="anger">

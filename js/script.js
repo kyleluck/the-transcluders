@@ -102,13 +102,14 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
         $scope.stars = 2;
       } else if ($scope.sentimentScore >= -0.75) {
         $scope.stars = 1.5;
-      } else if ($scope.sentimentScore >= -1.0){
+      } else {
         $scope.stars = 1;
       }
-      if ($scope.stars >= 1) {
-        $scope.starsImg = "stars/" + $scope.stars + ".png";
+      $scope.starsImg = "stars/" + $scope.stars + ".png";
+      if ($scope.sentimentScore) {
+        $scope.showStars = true;
       } else {
-        $scope.starsImg = false;
+        $scope.showStars = false;
       }
     });
   };

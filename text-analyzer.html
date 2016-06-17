@@ -5,7 +5,7 @@
   <button type="submit">Analyze</button>
 </form>
 <div ng-show="text" class="analyzer-results">
-  <img ng-src="{{starsImg}}" ng-show="starsImg"> <!--display stars -->
+  <img ng-src="{{starsImg}}" ng-show="showStars"> <!--display stars -->
   <div ng-class="sentimentScore > 0 ? 'positive' : (sentimentScore < 0 ? 'negative' : 'neutral')">Sentiment: {{sentiment}} </div>
   <div>Sentiment Score: {{sentimentScore}} </div>
   <div>

@@ -102,10 +102,14 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
         $scope.stars = 2;
       } else if ($scope.sentimentScore >= -0.75) {
         $scope.stars = 1.5;
-      } else {
+      } else if ($scope.sentimentScore >= -1.0){
         $scope.stars = 1;
       }
-      $scope.starsImg = "stars/" + $scope.stars + ".png";
+      if ($scope.stars >= 1) {
+        $scope.starsImg = "stars/" + $scope.stars + ".png";
+      } else {
+        $scope.starsImg = false;
+      }
     });
   };
 
@@ -115,7 +119,9 @@ app.controller('AnalyzerController', function($scope, Alchemy) {
 app.controller('RouteChangeController', ['$scope','$route', '$rootScope', function(sc, $route, $rootScope) {
   //change activetab when route changes
   $rootScope.$on("$routeChangeSuccess", function(event, current, previous) {
-    sc.activetab = current.$$route.activetab;
+    if (current.$$route != null) {
+      sc.activetab = current.$$route.activetab;
+    }
   });
 }]);
 
@@ -272,7 +278,6 @@ app.factory('GoogleMapsService', function() {
       var mapElement = document.getElementById('map');
       return new google.maps.Map(mapElement, {
         center: {lat: 39.099727, lng: -94.578567}
-        // zoom: 4
       });
     },
     createCircle: function(strokeColor, fillColor, center, map, population) {

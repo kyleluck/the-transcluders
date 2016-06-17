@@ -46,7 +46,7 @@ We utilized [Mob Programming](https://en.wikipedia.org/wiki/Mob_programming) thr
 ## Contribute to this project
 1. Move Firebase code into Angular
 2. Add process to automate creation of city json files.
-2. Allow user to choose which cities are analyzer on the map analyzer.
+2. Allow user to choose which cities are analyzed on the map.
 3. Robust error handling.
 
 ## Live Link

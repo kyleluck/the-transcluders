@@ -50,6 +50,7 @@
             <div class="modal-body">
               <input type="text" placeholder="Username..." id="username">
               <input type="password" placeholder="Password..." id="password">
+              <div id="loginMessage"></div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -71,6 +72,7 @@
             <div class="modal-body">
               <input type="text" placeholder="Email..." id="createUserEmail">
               <input type="password" placeholder="Password..." id="createUserPassword">
+              <div id="createAccountMessage"></div>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal" id="cancelCreateUser">Cancel</button>
@@ -200,12 +202,15 @@
         var password = $('#password').val();
         firebase.auth().signInWithEmailAndPassword(email, password).then(function() {
           //successfully logged in
-          window.location = 'product.html';
+          $('#loginMessage').text("You've successfully logged in. You will be redirected...");
+          setTimeout(function() {
+            window.location = 'product.html';
+          }, 1500);
         }).catch(function(error) {
           // Handle Errors here.
           var errorCode = error.code;
           var errorMessage = error.message;
-          alert('Invalid username or password. Please try again.');
+          $('#loginMessage').text('Invalid username or password. Please try again.');
           console.log('Error: ', errorMessage);
         });
       }
@@ -215,13 +220,15 @@
         var email = $('#createUserEmail').val();
         var password = $('#createUserPassword').val();
         firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
-          alert('You have successfully created an account. Please login.');
-          $('#createUserModal').modal('hide');
+          $('#createAccountMessage').text('You have successfully created an account. Please login.');
+          setTimeout(function() {
+            $('#createUserModal').modal('hide');
+          }, 2000);
         }).catch(function(error) {
           // Handle Errors here.
           var errorCode = error.code;
           var errorMessage = error.message;
-          alert('There was an error: ' + errorMessage);
+          $('#createAccountMessage').text('There was an error: ' + errorMessage);
           console.log('errorCode: ', errorCode);
         });
       }

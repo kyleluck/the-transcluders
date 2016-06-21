@@ -32,16 +32,16 @@ We utilized [Mob Programming](https://en.wikipedia.org/wiki/Mob_programming) thr
 
 ## Screenshots
 ### Landing Page
-![landing page](https://github.com/DigitalCrafts-May-2016-Cohort/the-transcluders/blob/master/images/landing-page.png)
+![landing page](/images/landing-page.png)
 
 ### URL Analyzer
-![url analyzer](https://github.com/DigitalCrafts-May-2016-Cohort/the-transcluders/blob/master/images/url-analyzer.png)
+![url analyzer](/images/url-analyzer.png)
 
 ### Text Analyzer
-![text analyzer](https://github.com/DigitalCrafts-May-2016-Cohort/the-transcluders/blob/master/images/text-analyzer.png)
+![text analyzer](/images/text-analyzer.png)
 
 ### Map Analyzer
-![map analyzer](https://github.com/DigitalCrafts-May-2016-Cohort/the-transcluders/blob/master/images/map-analyzer.png)
+![map analyzer](/images/map-analyzer.png)
 
 ## Contribute to this project
 1. Move Firebase code into Angular
